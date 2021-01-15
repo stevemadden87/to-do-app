@@ -1,6 +1,10 @@
 server:
-  port: 3274
+  port: 8080
+  servlet:
+    context-path: /todo
 spring:
+    application:
+    name: todo
     datasource:
         url: jdbc:postgresql:///to_do?cloudSqlInstance=to-do-application-301513:us-central1:to-do-2&socketFactory=com.google.cloud.sql.postgres.SocketFactory&user=postgres&password=codewebs
         hibernate:
@@ -8,3 +12,11 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
+    messages:
+        basename: validation
+    mvc:
+        view:
+            prefix: /WEB-INF/jsp/
+            suffix: .jsp
+    thymeleaf:
+        view-names: thymeleaf/*
