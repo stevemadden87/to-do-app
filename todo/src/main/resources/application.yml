@@ -1,7 +1,7 @@
 server:
-  port: 3360
+  port: 8080
   servlet:
-    context-path: /
+    context-path: /todo
 spring:
     application:
     name: todo
