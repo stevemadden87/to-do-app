@@ -30,7 +30,7 @@
             </button></a></div>
     <div class="col-xs-3"><a><div>
       <form action="/todo">
-            <select class="form-control" id="records" name="size">
+            <select class="form-control" id="records" name="size" onchange="this.form.submit()">
                  <option value="${noItems}" selected>Displaying ${noItems} of ${totalItems}</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -49,7 +49,6 @@
                 <option value="15" >15</option>
             </select>
          <input type="hidden" name="currentPage" value="${pageNum}">
-        <button type="submit" class="btn btn-dark">Go</button>
     </form>
   </div></a></div>
 </div>
