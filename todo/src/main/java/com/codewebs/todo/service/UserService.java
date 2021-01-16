@@ -39,7 +39,7 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 	
-	public Optional<User> userFindByUserId(UUID id) {
+	public User userFindByUserId(Integer id) {
 		return userRepository.findById(id);
 		
 	}

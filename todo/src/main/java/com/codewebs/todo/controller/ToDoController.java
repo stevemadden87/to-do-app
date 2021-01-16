@@ -1,37 +1,41 @@
 package com.codewebs.todo.controller;
 
+import java.nio.channels.FileChannel.MapMode;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.codewebs.todo.entities.TodoItem;
 import com.codewebs.todo.entities.User;
 import com.codewebs.todo.service.TodoItemService;
 import com.codewebs.todo.service.UserService;
 
-
-@RestController
-@RequestMapping(ToDoController.PATH)
-public class ToDoController {
-
-	public static final String PATH = "/todo-api";
-	
+@Controller
+public class ToDoController extends BaseController {
 	private final TodoItemService todoItemService;
 	private final UserService userService;
-	
 
 	@Autowired
 	public ToDoController(TodoItemService todoItemService, UserService userService) {
+		super(userService);
 		this.todoItemService = todoItemService;
 		this.userService = userService;
 	}
@@ -41,38 +45,33 @@ public class ToDoController {
 		return todoItemService.getItem(itemId);
 	}
 
-	// Get todo list for logged in user
-	@GetMapping("/list/{userId}")
-	public List<TodoItem> getUsersList(@PathVariable UUID userId) {
-		User owner = userService.userFindByUserId(userId).orElseThrow();
-		return todoItemService.getAllItemsForOwner(owner);
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	public String newTodoItem(@RequestParam String description) {
+		todoItemService.createNewTodoItem(description, getActiveUserFromSession());
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public String editTodoItem(@RequestParam String description, @RequestParam Integer itemId) {
+		TodoItem editItem = todoItemService.getItem(itemId);
+		todoItemService.editTodoItem(editItem, description);
+		return "redirect:/";
 	}
 
-	// New todo item
-	@PostMapping(value = "/new")
-	public ResponseEntity<TodoItem> newTodoItem(@RequestBody TodoItem item) {
-		return ResponseEntity.ok(todoItemService.createNewTodoItem(item));
-	}
-
-	// Edit todo item
-	@PutMapping("/edit")
-	public ResponseEntity<TodoItem> editTodoItem(@RequestBody TodoItem item) {
-		TodoItem editItem = todoItemService.getItem(item.getId());
-		return ResponseEntity.ok(todoItemService.editTodoItem(editItem));
-	}
-
-	// Delete todo item
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Boolean> deleteTodoItem(@PathVariable Integer id) {
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String deleteTodo(@RequestParam Integer id) {
 		TodoItem item = todoItemService.getItem(id);
-		return ResponseEntity.ok(todoItemService.deleteTodoItem(item));
+		todoItemService.deleteTodoItem(item);
+		return "redirect:/";
 	}
 
 	// Change done state
-	@PutMapping("/state/{id}")
-	public ResponseEntity<TodoItem> changeDoneState(@PathVariable Integer id) {
+	@RequestMapping(value = "/state", method = RequestMethod.GET)
+	public String changeDoneState(@RequestParam Integer id) {
+		System.out.println("test");
 		TodoItem item = todoItemService.getItem(id);
-		return ResponseEntity.ok(todoItemService.changeDoneStateForTodoItem(item));
+		ResponseEntity.ok(todoItemService.changeDoneStateForTodoItem(item));
+		return "redirect:/";
 	}
 
 }

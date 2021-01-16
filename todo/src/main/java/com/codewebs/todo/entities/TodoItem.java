@@ -1,6 +1,7 @@
 package com.codewebs.todo.entities;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,10 +15,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,8 +35,8 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @Table(name = "todo")
-public class TodoItem  {
-	
+public class TodoItem {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -50,5 +53,14 @@ public class TodoItem  {
 
 	@Column(name = "last_updated")
 	private java.util.Date lastUpdated;
+
+	@ManyToMany(mappedBy = "todoItems")
+	private Set<User> users;
+
+	@Transient
+	@JsonProperty("test")
+	public String getEditStartDate() {
+		return new SimpleDateFormat("dd-MM-yyyy").format(lastUpdated);
+	}
 
 }

@@ -10,4 +10,5 @@ import com.codewebs.todo.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 	User findByUsername(String username);
+	User findById(Integer id);
 }
