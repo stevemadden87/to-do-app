@@ -23,7 +23,6 @@ import com.codewebs.todo.service.TodoItemService;
 import com.codewebs.todo.service.UserService;
 import com.codewebs.todo.validator.UserValidator;
 
-
 @Controller
 public class UserController extends BaseController {
 
@@ -78,44 +77,15 @@ public class UserController extends BaseController {
 	}
 
 	@GetMapping({ "/", "/welcome" })
-	public String welcome(@RequestParam(value= "currentPage", defaultValue = "0") Integer currentPage, 
-			@RequestParam(value= "size", defaultValue = "10") Integer size, Model model) {
-		
-		
-		
-		  Pageable paging = PageRequest.of(currentPage, size);
-		  
-	        //Page<EmployeeEntity> pagedResult = repository.findAll(paging);
- 
-		
+	public String welcome(@RequestParam(value = "currentPage", defaultValue = "0") Integer currentPage,
+			@RequestParam(value = "size", defaultValue = "10") Integer size, Model model) {
+		Pageable paging = PageRequest.of(currentPage, size);
 		Page<TodoItem> userItems = todoItemService.getAllItemsForOwnerPaginated(getActiveUserFromSession(), paging);
-		
 		model.addAttribute("noItems", userItems.getSize());
 		model.addAttribute("totalItems", userItems.getTotalElements());
 		model.addAttribute("noOfPages", userItems.getTotalPages());
 		model.addAttribute("pageNum", paging.getPageNumber());
 		model.addAttribute("size", paging.getPageSize());
-		model.addAttribute("todos",
-				userItems.stream().map(userItem -> buildTodoItemResponse(userItem)).collect(Collectors.toList()));
-		return "welcome";
-	}
-	
-	
-	
-	@GetMapping({ "/list"})
-	public String listAllItemForUser(@RequestParam(value= "currentPage", defaultValue = "0") Integer currentPage, 
-			@RequestParam(value= "recordsPerPage", defaultValue = "10") Integer recordsPerPage, Model model) {
-		
-		
-		
-		  Pageable paging = PageRequest.of(currentPage , recordsPerPage);
-		  
-	        //Page<EmployeeEntity> pagedResult = repository.findAll(paging);
- 
-		
-		Page<TodoItem> userItems = todoItemService.getAllItemsForOwnerPaginated(getActiveUserFromSession(), paging);
-		
-		
 		model.addAttribute("todos",
 				userItems.stream().map(userItem -> buildTodoItemResponse(userItem)).collect(Collectors.toList()));
 		return "welcome";
