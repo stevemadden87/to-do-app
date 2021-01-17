@@ -28,7 +28,7 @@ import com.codewebs.todo.entities.User;
 import com.codewebs.todo.service.TodoItemService;
 import com.codewebs.todo.service.UserService;
 
-@Controller
+@RestController
 public class ToDoController extends BaseController {
 	private final TodoItemService todoItemService;
 	private final UserService userService;

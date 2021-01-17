@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.codewebs.todo.entities.TodoItem;
 import com.codewebs.todo.entities.User;
@@ -23,7 +24,7 @@ import com.codewebs.todo.service.TodoItemService;
 import com.codewebs.todo.service.UserService;
 import com.codewebs.todo.validator.UserValidator;
 
-@Controller
+@RestController
 public class UserController extends BaseController {
 
 	private final UserService userService;

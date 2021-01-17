@@ -6,12 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.bind.annotation.RestController;
 
 
 
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.codewebs.todo" })
+@RestController
 public class TodoApplication extends SpringBootServletInitializer {
 	
 	
