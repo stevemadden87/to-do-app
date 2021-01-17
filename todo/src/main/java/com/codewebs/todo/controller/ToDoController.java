@@ -59,19 +59,20 @@ public class ToDoController extends BaseController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deleteTodo(@RequestParam Integer id) {
+	public String deleteTodo(@RequestParam Integer id, @RequestParam(value = "currentPage", defaultValue = "0") Integer currentPage,
+			@RequestParam(value = "size", defaultValue = "10") Integer size) {
 		TodoItem item = todoItemService.getItem(id);
 		todoItemService.deleteTodoItem(item);
-		return "redirect:/";
+		return "redirect:/?currentPage=" + currentPage + "&size="+size;
 	}
 
 	// Change done state
 	@RequestMapping(value = "/state", method = RequestMethod.GET)
-	public String changeDoneState(@RequestParam Integer id) {
-		System.out.println("test");
+	public String changeDoneState(@RequestParam Integer id, @RequestParam(value = "currentPage", defaultValue = "0") Integer currentPage,
+			@RequestParam(value = "size", defaultValue = "10") Integer size) {
 		TodoItem item = todoItemService.getItem(id);
 		ResponseEntity.ok(todoItemService.changeDoneStateForTodoItem(item));
-		return "redirect:/";
+		return "redirect:/?currentPage=" + currentPage + "&size="+size;
 	}
 
 }

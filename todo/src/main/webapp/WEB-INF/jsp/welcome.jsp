@@ -31,22 +31,12 @@
     <div class="col-xs-3"><a><div>
       <form action="/todo">
             <select class="form-control" id="records" name="size" onchange="this.form.submit()">
-                 <option value="${noItems}" selected>Displaying ${noItems} of ${totalItems}</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+                 <option value="${noItems}" selected>Showing ${noItems} of ${totalItems} items per page</option>
                 <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
                 <option value="10">10</option>
-                <option value="11" >11</option>
-                <option value="12" >12</option>
-                <option value="13" >13</option>
-                <option value="14" >14</option>
                 <option value="15" >15</option>
+                <option value="20">20</option>
+                <option value="30" >30</option>
             </select>
          <input type="hidden" name="currentPage" value="${pageNum}">
     </form>
@@ -77,16 +67,16 @@
                         <tr>
                            <td>
                               <c:if test="${!todo.isDone}"><a type="button" class=" btn-sm btn-warning"
-                                 href="/todo/state?id=${todo.id}">Not Done</a>  ${todo.description}</c:if>
+                                 href="/todo/state?id=${todo.id}&currentPage=${pageNum}&size=${size}">Not Done</a>  ${todo.description}</c:if>
                               <c:if test="${todo.isDone}"><a type="button" class="btn-sm btn-success"
-                                 href="/todo/state?id=${todo.id}">Done</a> ${todo.description}</c:if>
+                                 href="/todo/state?id=${todo.id}&currentPage=${pageNum}&size=${size}">Done</a> ${todo.description}</c:if>
                            </td>
                            <td>${todo.lastUpdated}</td>
-                           <td><button type="button" class="btn btn-info editTodo" data-toggle="modal" data-id="${todo.id}" data-target="#editTodo">
+                           <td><button type="button" class="btn btn-info editTodo" data-toggle="modal" data-page="${size}" data-page="${pageNum}" data-id="${todo.id}" data-target="#editTodo">
                               Edit
                               </button>
                               <a type="button" class="btn btn-danger"
-                                 href="/todo/delete?id=${todo.id}">Delete</a>
+                                 href="/todo/delete?id=${todo.id}&currentPage=${pageNum}&size=${size}">Delete</a>
                            </td>
                         </tr>
                      </c:forEach>
@@ -101,16 +91,6 @@
                     href="/todo?currentPage=${pageNum - 1}&size=${size}">Previous</a>
                 </li>
             </c:if>
-
-            <c:forEach begin="0" end="${noOfPages}" var="i">
-                <c:choose>
-                    <c:when test="${currentPage eq i}">
-                    
-                    </c:when>
-
-                </c:choose>
-            </c:forEach>
-
 
             <c:forEach begin="0" end="${noOfPages - 1}" var="i">
                 <c:choose>
@@ -222,6 +202,8 @@
          $(".editTodo").click(function(e) {
          var tmpl = $.templates('<input name="itemId" type="hidden" value="{{:name}}"placeholder="Text input">');
          var result = {name: $(e.currentTarget).data('id')};
+          $('#page').val($(e.currentTarget).data('page'));
+          $('#size').val($(e.currentTarget).data('size'));
          // Render template for person object
          var htmlResult = tmpl.render(result);
          $("#editTodo").addClass("is-active");

@@ -1,7 +1,5 @@
 server:
   port: 8080
-  servlet:
-    context-path: /todo
 spring:
     application:
     name: todo
@@ -20,3 +18,15 @@ spring:
             suffix: .jsp
     thymeleaf:
         view-names: thymeleaf/*
+runtime: java11
+env: standard
+instance_class: F2
+handlers:
+  - url: .*
+    script: auto
+automatic_scaling:
+  min_idle_instances: automatic
+  max_idle_instances: automatic
+  min_pending_latency: automatic
+  max_pending_latency: automatic
+network: {}

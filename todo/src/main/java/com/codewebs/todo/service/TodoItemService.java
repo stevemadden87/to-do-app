@@ -61,12 +61,12 @@ public class TodoItemService {
 	}
 
 	public Page<TodoItem> getAllItemsForOwnerPaginated(User owner, org.springframework.data.domain.Pageable paging) {
-		return todoItemRepository.findByOwnerOrderByIdAsc(owner, paging);
+		return todoItemRepository.findByOwnerOrderByIdDesc(owner, paging);
 
 	}
 	
 	public Page<TodoItem> getAllItemsForOwnerDefault(User owner, org.springframework.data.domain.Pageable paging) {
-		return todoItemRepository.findByOwnerOrderByIdAsc(owner, paging);
+		return todoItemRepository.findByOwnerOrderByIdDesc(owner, paging);
 
 	}
 

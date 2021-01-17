@@ -18,7 +18,7 @@ public interface TodoItemRepository  extends JpaRepository<TodoItem, Integer>{
 	
 	
 	//Optional<TodoItem> findById(Integer id);
-	Page<TodoItem> findByOwnerOrderByIdAsc(User owner, org.springframework.data.domain.Pageable paging);
+	Page<TodoItem> findByOwnerOrderByIdDesc(User owner, org.springframework.data.domain.Pageable paging);
 
 
 
