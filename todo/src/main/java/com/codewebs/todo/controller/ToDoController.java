@@ -28,7 +28,7 @@ import com.codewebs.todo.entities.User;
 import com.codewebs.todo.service.TodoItemService;
 import com.codewebs.todo.service.UserService;
 
-@RestController
+@Controller
 public class ToDoController extends BaseController {
 	private final TodoItemService todoItemService;
 	private final UserService userService;
@@ -74,5 +74,7 @@ public class ToDoController extends BaseController {
 		ResponseEntity.ok(todoItemService.changeDoneStateForTodoItem(item));
 		return "redirect:/?currentPage=" + currentPage + "&size="+size;
 	}
+	
+	
 
 }

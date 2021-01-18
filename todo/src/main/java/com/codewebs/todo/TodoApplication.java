@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.codewebs.todo" })
-@RestController
 public class TodoApplication extends SpringBootServletInitializer {
 	
 	

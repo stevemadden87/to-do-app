@@ -24,7 +24,7 @@ import com.codewebs.todo.service.TodoItemService;
 import com.codewebs.todo.service.UserService;
 import com.codewebs.todo.validator.UserValidator;
 
-@RestController
+@Controller
 public class UserController extends BaseController {
 
 	private final UserService userService;
@@ -91,7 +91,6 @@ public class UserController extends BaseController {
 				userItems.stream().map(userItem -> buildTodoItemResponse(userItem)).collect(Collectors.toList()));
 		return "welcome";
 	}
-
 	public TodoItemResponse buildTodoItemResponse(TodoItem userItem) {
 		return new TodoItemResponse(userItem);
 	}
