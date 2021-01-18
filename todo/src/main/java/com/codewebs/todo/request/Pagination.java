@@ -15,11 +15,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pagination {
-	
-	
-	
-	private Integer pageNumber;
 
+	private Integer pageNumber;
 	private Integer size;
 
 	public Pageable toPageable() {

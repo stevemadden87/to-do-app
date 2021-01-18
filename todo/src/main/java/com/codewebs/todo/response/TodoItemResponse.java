@@ -32,11 +32,9 @@ public class TodoItemResponse {
 		this.isDone = userItem.getIsDone();
 		this.lastUpdated = new SimpleDateFormat("dd-MM-yyyy").format(userItem.getLastUpdated());
 		System.out.println(lastUpdated);
-
 	}
 
 	public TodoItemResponse(Integer id, String description, User owner, Boolean isDone, Date lastUpdated) {
-		
 		this.id = id;
 		this.description = description;
 		this.ownerId = owner.getId();

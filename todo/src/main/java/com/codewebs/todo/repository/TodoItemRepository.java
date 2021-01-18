@@ -16,10 +16,5 @@ import com.codewebs.todo.request.Pagination;
 @Repository
 public interface TodoItemRepository  extends JpaRepository<TodoItem, Integer>{
 	
-	
-	//Optional<TodoItem> findById(Integer id);
 	Page<TodoItem> findByOwnerOrderByIdDesc(User owner, org.springframework.data.domain.Pageable paging);
-
-
-
 }

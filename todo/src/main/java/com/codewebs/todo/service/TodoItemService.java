@@ -46,7 +46,6 @@ public class TodoItemService {
 
 	public Boolean deleteTodoItem(TodoItem item) {
 		if (item != null) {
-			
 			todoItemRepository.delete(item);
 			return true;
 		}
@@ -62,12 +61,10 @@ public class TodoItemService {
 
 	public Page<TodoItem> getAllItemsForOwnerPaginated(User owner, org.springframework.data.domain.Pageable paging) {
 		return todoItemRepository.findByOwnerOrderByIdDesc(owner, paging);
-
 	}
 	
 	public Page<TodoItem> getAllItemsForOwnerDefault(User owner, org.springframework.data.domain.Pageable paging) {
 		return todoItemRepository.findByOwnerOrderByIdDesc(owner, paging);
-
 	}
 
 	public TodoItem getItem(Integer id) {
