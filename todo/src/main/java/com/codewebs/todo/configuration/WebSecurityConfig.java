@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 
 @Configuration
@@ -38,7 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .logout()
-                .permitAll();
+                .permitAll()
+                .and().csrf().disable()
+                .headers().defaultsDisabled()
+          .addHeaderWriter(new StaticHeadersWriter("Cache-Control"," no-cache,max-age=0, must-revalidate"))
+          .addHeaderWriter(new StaticHeadersWriter("Expires","0"));
     }
 
     @Bean

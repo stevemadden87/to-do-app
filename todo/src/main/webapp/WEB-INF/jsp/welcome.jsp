@@ -30,6 +30,7 @@
             </button></a></div>
     <div class="col-xs-3"><a><div>
       <form action="/todo">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <select class="form-control" id="records" name="size" onchange="this.form.submit()">
                  <option value="${noItems}" selected>Showing ${noItems} of ${totalItems} items per page</option>
                 <option value="5">5</option>
@@ -150,6 +151,7 @@
                            <button type="submit" value="Submit" class="btn btn-success">Add</button>
                         </div>
                      </div>
+                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                   </form:form>
                </div>
                <div class="modal-footer">
@@ -186,6 +188,7 @@
                            <button type="submit" value="Submit" class="btn btn-success">Done</button>
                         </div>
                      </div>
+                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                   </form:form>
                </div>
                <div class="modal-footer">
