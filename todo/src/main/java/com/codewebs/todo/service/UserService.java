@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.codewebs.todo.entities.User;
-import com.codewebs.todo.repository.RoleRepository;
+import com.codewebs.todo.enumerated.Role;
 import com.codewebs.todo.repository.UserRepository;
 import com.google.auto.value.extension.serializable.SerializableAutoValue;
 
@@ -17,21 +17,21 @@ import com.google.auto.value.extension.serializable.SerializableAutoValue;
 public class UserService {
 
 	private final UserRepository userRepository;
-	private final RoleRepository roleRepository;
+	//private final RoleRepository roleRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	public UserService(UserRepository userRepository, RoleRepository roleRepository,
+	public UserService(UserRepository userRepository,
 			BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userRepository = userRepository;
-		this.roleRepository = roleRepository;
+		//this.roleRepository = roleRepository;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 
 	}
 
 	public void save(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		user.setRoles(new HashSet<>(roleRepository.findAll()));
+		user.setRole(Role.USER);
 		userRepository.save(user);
 	}
 

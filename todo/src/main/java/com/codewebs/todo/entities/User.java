@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-
+import com.codewebs.todo.enumerated.Role;
 
 import javax.persistence.JoinColumn;
 
@@ -52,9 +54,12 @@ public class User {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
 	private Set<TodoItem> todoList;
 
-	@ManyToMany
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	Set<Role> roles;
+	@Column(name = "role", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
+	
+	
 
 	@ManyToMany
 	@JoinTable(name = "user_todo", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "todo_id"))
