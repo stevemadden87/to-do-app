@@ -14,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -37,35 +39,34 @@ public class ToDoItemServiceTest {
 	@Captor
 	private ArgumentCaptor<TodoItem> toDoItemArgumentCaptor;
 
-//	@Test
-//	public void getAllItemsForOwner() {
-//		
-//		User user = User.builder().id(1).build();
-//		TodoItem todoItem1 = TodoItem.builder().id(1).description("Item 1 description").isDone(false)
-//				.lastUpdated(new java.util.Date()).owner(user).build();
-//		TodoItem todoItem2 = TodoItem.builder().id(2).description("Item 2 description").isDone(false)
-//				.lastUpdated(new java.util.Date()).owner(user).build();
-//		
-//		List<TodoItem> toDoItemsList1 = new ArrayList<TodoItem>();
-//		toDoItemsList1.add(todoItem1);
-//		toDoItemsList1.add(todoItem2);
-//		
-//		todoItemService.getAllItemsForOwner(user);
-//		verify(todoItemRepository, times(1)).save(toDoItemArgumentCaptor.capture());
-//		List<TodoItem> todoItemsList2 = toDoItemArgumentCaptor.getAllValues();
-//		
-//		assertTrue(CollectionUtils.isEqualCollection(toDoItemsList1, todoItemsList2));
-//	}
+	@Test
+	public void getAllItemsForOwner() {
+		User user = User.builder().id(1).build();
+		TodoItem todoItem1 = TodoItem.builder().id(1).description("Item 1 description").isDone(false)
+				.lastUpdated(new java.util.Date()).owner(user).build();
+		TodoItem todoItem2 = TodoItem.builder().id(2).description("Item 2 description").isDone(false)
+				.lastUpdated(new java.util.Date()).owner(user).build();
+		
+		List<TodoItem> toDoItemsList1 = new ArrayList<TodoItem>();
+		toDoItemsList1.add(todoItem1);
+		toDoItemsList1.add(todoItem2);
+		Pageable paging = PageRequest.of(0, 2);
+		todoItemService.getAllItemsForOwnerPaginated(user, paging);
+		
+		verify(todoItemRepository, times(1)).save(toDoItemArgumentCaptor.capture());
+		List<TodoItem> todoItemsList2 = toDoItemArgumentCaptor.getAllValues();
+		assertTrue(CollectionUtils.isEqualCollection(toDoItemsList1, todoItemsList2));
+	}
 
 	@Test
 	public void deleteTodoItem() {
-		
+
 		TodoItem todoItem = TodoItem.builder().id(1).description("Item description").build();
 		todoItemService.deleteTodoItem(todoItem);
-		
+
 		Mockito.verify(todoItemRepository, times(1)).save(toDoItemArgumentCaptor.capture());
 		TodoItem deletedItem = toDoItemArgumentCaptor.getValue();
-		
+
 		assertNull(todoItemService.getItem(deletedItem.getId()));
 
 	}
@@ -86,7 +87,7 @@ public class ToDoItemServiceTest {
 
 	@Test
 	public void changeDoneStateForTodoItem() {
-		
+
 		User user = User.builder().id(1).build();
 		TodoItem todoItem = TodoItem.builder().id(1).description("Task name").isDone(false)
 				.lastUpdated(new java.util.Date()).owner(user).build();
@@ -101,7 +102,7 @@ public class ToDoItemServiceTest {
 
 	@Test
 	public void editTodoItem() {
-		
+
 		TodoItem toDoItem = TodoItem.builder().id(1).description("New description name").build();
 		todoItemService.editTodoItem(toDoItem, toDoItem.getDescription());
 

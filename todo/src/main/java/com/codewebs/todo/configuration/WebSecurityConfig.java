@@ -40,10 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .logout()
                 .permitAll()
-                .and().csrf().disable()
-                .headers().defaultsDisabled()
-          .addHeaderWriter(new StaticHeadersWriter("Cache-Control"," no-cache,max-age=0, must-revalidate"))
-          .addHeaderWriter(new StaticHeadersWriter("Expires","0"));
+                .and().csrf().disable().authorizeRequests();
     }
 
     @Bean
