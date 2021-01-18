@@ -10,6 +10,7 @@
       <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
    </head>
    <body>
+
       <div class="container">
          <c:if test="${pageContext.request.userPrincipal.name != null}">
             <form id="logoutForm" method="POST" action="${contextPath}/logout">
@@ -18,12 +19,9 @@
             <h2>${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
          </c:if>
       </div>
+
       <div class="container">
          <div>
-
-
-
-
         <div class="col-xs-12">
     <div class="col-xs-3"><a><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTodo">
             Add Todo
@@ -46,6 +44,7 @@
 <br>
 <br>
 <br>
+
 <c:choose>
    <c:when test="${not empty todos}">
      <!-- Button trigger modal -->
@@ -113,9 +112,6 @@
                     href="/todo?currentPage=${pageNum + 1}&size=${size}">Next</a>
                 </li>
             </c:if>
-
-                
-     
         </ul>
     </nav>
      </div>
@@ -126,7 +122,8 @@
    <c:otherwise>
        Select less items to display
    </c:otherwise>
-</c:choose>    
+</c:choose>  
+
       <!-- Modal -->
       <div class="modal fade" id="addTodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered" role="document">
@@ -160,6 +157,7 @@
             </div>
          </div>
       </div>
+
       <!-- Modal -->
       <div class="modal fade" id="editTodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
          <div class="modal-dialog modal-dialog-centered" role="document">
@@ -197,6 +195,7 @@
             </div>
          </div>
       </div>
+      
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.90/jsrender.min.js"></script>
